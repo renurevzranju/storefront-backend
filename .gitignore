@@ -1,0 +1,10 @@
+# Build results
+dist
+
+# Packages and package.json files
+node_modules
+package.json
+
+# Environment
+.env
+database.json
