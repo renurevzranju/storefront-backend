@@ -37,7 +37,7 @@ Clone the project
 
 Go to the project directory
 ```
-  cd image-processing-api
+  cd storefront-backend
 ```
 
 Install dependencies
@@ -79,9 +79,9 @@ Server will be running on port 5000
 ### API Endpoints
 
 #### Users
-- GET http://localhost:5000/api/users -Index [token required] (Get all users list)
-- GET http://localhost:5000/api/users/:id -Show [token required] (Get user based on id)
+- GET http://localhost:5000/api/users -Index [token required]
+- GET http://localhost:5000/api/users/:id -Show [token required]
 - POST http://localhost:5000/api/users -Create [token required]
-- POST http://localhost:5000/api/users/login -Login (login and generate token)
+- POST http://localhost:5000/api/users/login -Login
 - PUT http://localhost:5000/api/users/:id -Edit [token required]
 - DELETE http://localhost:5000/api/users/:id -Delete [token required]
