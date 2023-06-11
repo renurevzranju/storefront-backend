@@ -28,6 +28,60 @@ I'm using Windows OS, so all my commands will be related to that.
 4. Run `CREATE DATABASE store WITH OWNER = test_user;` and `CREATE DATABASE store_test WITH OWNER = test_user;` to create the database `store` and `store_test` is created for testing.
 5. Run `psql -h localhost -U test_user -d store` to check if the user is able to access the database store.
 
-### Install the modules
-Run `npm install` to install all required modules.
+### Run Locally
 
+Clone the project
+```
+  git clone https://github.com/renurevzranju/storefront-backend.git
+```
+
+Go to the project directory
+```
+  cd image-processing-api
+```
+
+Install dependencies
+```
+  npm install
+```
+
+#### Scripts
+
+Build script to compile TS to JS
+```
+  npm run build
+```
+
+Start the application in watch mode
+```
+  npm run watch
+```
+
+Run Unit Test using Jasmine Library
+```
+  npm run test
+```
+
+Format the code
+```
+  npm run prettier
+```
+
+Lint the code
+```
+  npm run lint
+```
+
+## Usage
+
+Server will be running on port 5000
+
+### API Endpoints
+
+#### Users
+- GET http://localhost:5000/api/users -Index [token required] (Get all users list)
+- GET http://localhost:5000/api/users/:id -Show [token required] (Get user based on id)
+- POST http://localhost:5000/api/users -Create [token required]
+- POST http://localhost:5000/api/users/login -Login (login and generate token)
+- PUT http://localhost:5000/api/users/:id -Edit [token required]
+- DELETE http://localhost:5000/api/users/:id -Delete [token required]
