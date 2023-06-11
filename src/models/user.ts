@@ -43,6 +43,49 @@ export class UserModel {
     }
 
     /**
+    * Delete user in the database
+    * @param {number} id Id of the user.
+    * @return {number} No of rows deleted.
+    */
+    async delete(id: number): Promise<number> {
+        try {
+            // @ts-ignore
+            const connection = await client.connect();
+            const sql = "DELETE FROM users WHERE id = ($1)";
+
+            const result = await connection.query(sql, [id]);
+            const count = result.rowCount;
+            connection.release();
+
+            return count;
+        } catch (err) {
+            throw new Error(
+                `Unable to delete user ${id}. Error: ${err}`
+            );
+        }
+    }
+
+    /**
+     * Get user based on user_name from the users table in the database
+     * @param {string} user_name username of the user to be fetched.
+     * @return {User} User object based on the id passed.
+     */
+    async getUserByUserName(user_name: string): Promise<User> {
+        try {
+            // @ts-ignore
+            const connection = await client.connect();
+            const sql = `SELECT * FROM users WHERE user_name='${user_name}'`;
+
+            const result = await connection.query(sql);
+            connection.release();
+
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Unable to get user. Error: ${err}`);
+        }
+    }
+
+    /**
      * Get all the users from database
      * @return {User[]} list of users.
      */
@@ -113,49 +156,6 @@ export class UserModel {
             throw new Error(
                 `Unable to update user ${user.user_name}. Error: ${err}`
             );
-        }
-    }
-
-    /**
-    * Delete user in the database
-    * @param {number} id Id of the user.
-    * @return {number} No of rows deleted.
-    */
-    async delete(id: number): Promise<number> {
-        try {
-            // @ts-ignore
-            const connection = await client.connect();
-            const sql = "DELETE FROM users WHERE id = ($1)";
-
-            const result = await connection.query(sql, [id]);
-            const count = result.rowCount;
-            connection.release();
-
-            return count;
-        } catch (err) {
-            throw new Error(
-                `Unable to delete user ${id}. Error: ${err}`
-            );
-        }
-    }
-
-    /**
-     * Get user based on user_name from the users table in the database
-     * @param {string} user_name username of the user to be fetched.
-     * @return {User} User object based on the id passed.
-     */
-    async getUserByUserName(user_name: string): Promise<User> {
-        try {
-            // @ts-ignore
-            const connection = await client.connect();
-            const sql = `SELECT * FROM users WHERE user_name='${user_name}'`;
-
-            const result = await connection.query(sql);
-            connection.release();
-
-            return result.rows[0];
-        } catch (err) {
-            throw new Error(`Unable to get user. Error: ${err}`);
         }
     }
 }

@@ -85,3 +85,11 @@ Server will be running on port 5000
 - POST http://localhost:5000/api/users/login -Login
 - PUT http://localhost:5000/api/users/:id -Edit [token required]
 - DELETE http://localhost:5000/api/users/:id -Delete [token required]
+
+#### Products
+- GET http://localhost:5000/api/products -Index
+- GET http://localhost:5000/api/products/:id -Show
+- POST http://localhost:5000/api/products -Create [token required]
+- GET http://localhost:5000/api/products/category/:category -Products by category
+- PUT http://localhost:5000/api/products/:id -Edit
+- DELETE http://localhost:5000/api/products/:id -Delete
