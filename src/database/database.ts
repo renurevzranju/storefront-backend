@@ -12,13 +12,13 @@ const {
   ENV,
 } = process.env;
 
-const databaseName : string | undefined = (ENV || "").trim() === "test" ? POSTGRES_TEST_DB : POSTGRES_DB;
+const databaseName: string | undefined = (ENV || "").trim() === "test" ? POSTGRES_TEST_DB : POSTGRES_DB;
 
 const client = new Pool({
-    host: POSTGRES_HOST,
-    database: databaseName,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
+  host: POSTGRES_HOST,
+  database: databaseName,
+  user: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
 });
 
 export default client;
