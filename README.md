@@ -93,3 +93,11 @@ Server will be running on port 5000
 - GET http://localhost:5000/api/products/category/:category -Products by category
 - PUT http://localhost:5000/api/products/:id -Edit
 - DELETE http://localhost:5000/api/products/:id -Delete
+
+#### Orders
+- GET http://localhost:5000/api/orders -Index [token required]
+- GET http://localhost:5000/api/orders/:id -Show [token required]
+- POST http://localhost:5000/api/orders/create/:user_id -Create [token required]
+- POST http://localhost:5000/api/orders/addProduct -Add products to order [token required]
+- GET http://localhost:5000/api/orders/getOrderByStatus/:id/:status -Orders by status [token required]
+- DELETE http://localhost:5000/api/orders/:id -Delete order by order_id [token required]
