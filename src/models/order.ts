@@ -49,7 +49,7 @@ export class OrderModel {
      * @param {OrderProduct} order.products Products that the user orders.
      * @return {void} returns nothing.
      */
-    async create(order: Order): Promise<void> {
+    async create(order: Order): Promise<Order> {
         try {
             // @ts-ignore
             const connection = await client.connect();
@@ -68,6 +68,8 @@ export class OrderModel {
             });
 
             connection.release();
+
+            return createdOrder;
 
         } catch (err) {
             throw new Error(

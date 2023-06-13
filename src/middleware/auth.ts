@@ -19,7 +19,7 @@ export default function authenticate(
         const token = split.length > 1 ? split[1] : authToken;
 
         const authenticated = AuthenticationHelper.verifyToken(token);
-        authenticated ? next() : response.status(400).send(`Authentication failed`);
+        authenticated ? next() : response.status(400).send("Authentication failed");
     } catch (error) {
         response.status(401).send(`error authenticating: ${error}`);
     }

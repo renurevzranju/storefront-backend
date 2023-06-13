@@ -18,7 +18,7 @@ export default class UserHandler {
                 const token = AuthenticationHelper.generateToken(Number(users.id));
                 response.status(200).json({ message: "User created successfully", token: token });
             } else {
-                response.status(400).json({ error: `user_name, first_name, last_name and password are required` });
+                response.status(400).json({ errorMessage: "user_name, first_name, last_name and password are required" });
             }
 
         } catch (error) {
@@ -55,14 +55,14 @@ export default class UserHandler {
         try {
             const { user_name, password } = _request.body;
             //user_name and password values are required check
-            if (!(user_name && password)) return response.status(400).json({ error: `user_name and password are required` });
+            if (!(user_name && password)) return response.status(400).json({ error: "user_name and password are required" });
 
             const user = await model.getUserByUserName(user_name);
             //If user is empty check
-            if (!user) return response.status(401).json({ error: `Invalid user_name or password provided` });
+            if (!user) return response.status(401).json({ error: "Invalid user_name or password provided" });
 
             const passwordMatches = AuthenticationHelper.verifyPassword(user.password, password);
-            if (!passwordMatches) return response.status(401).json({ error: `Verify user_name and password again` });
+            if (!passwordMatches) return response.status(401).json({ error: "Verify user_name and password again" });
 
             const token = AuthenticationHelper.generateToken(Number(user.id));
             response.status(200).json({ message: "Logged in successfully", token: token });

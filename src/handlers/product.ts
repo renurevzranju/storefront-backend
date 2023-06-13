@@ -8,15 +8,13 @@ export default class ProductHandler {
     async create(_request: Request, response: Response) {
         try {
             const { name, price, category } = _request.body;
-            console.log(name, price, category);
             if (name && price) {
-                console.log(Number(price))
                 const product = await model.create({
                     name, price: Number(price), category
                 });
                 response.status(200).json({ message: "Product created successfully", product: product });
             } else {
-                response.status(400).json({ error: `name and price are required to create a product` });
+                response.status(400).json({ error: "name and price are required to create a product" });
             }
 
         } catch (error) {
@@ -55,7 +53,7 @@ export default class ProductHandler {
         try {
             const products = await model.getProductsByCategory(category);
             //If product is empty check
-            if (products.length < 1) return response.status(401).json({ error: `Provide a valid category or there are no products in this category` });
+            if (products.length < 1) return response.status(401).json({ error: "Provide a valid category or there are no products in this category" });
 
             response.status(200).json(products);
 

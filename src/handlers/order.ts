@@ -8,15 +8,15 @@ export default class ProductHandler {
     async create(_request: Request, response: Response) {
 
         try {
-            const { user_id } = _request.params
+            const { user_id } = _request.params;
             const { status, products } = _request.body;
             if (status && products.length > 0 && user_id) {
                 const orderPlaced = await model.create({
                     user_id, status, products
                 });
-                response.status(200).json({ message: "Order created successfully" });
+                response.status(200).json({ message: "Order created successfully", order: orderPlaced });
             } else {
-                response.status(400).json({ error: `status and products are required to create an order` });
+                response.status(400).json({ error: "status and products are required to create an order" });
             }
 
         } catch (error) {
@@ -34,7 +34,7 @@ export default class ProductHandler {
                 });
                 response.status(200).json({ message: "Products are added successfully", products: addProductToOrder });
             } else {
-                response.status(400).json({ message: `order_id, product_id and quantity are required to add a product to an order` });
+                response.status(400).json({ message: "order_id, product_id and quantity are required to add a product to an order" });
             }
 
         } catch (error) {
@@ -72,7 +72,7 @@ export default class ProductHandler {
         try {
             const orders = await model.getOrdersByStatus(status, Number(id));
             //If product is empty check
-            if (orders.length < 1) return response.status(200).json({ message: `Provide status as "active or completed" and valid user_id OR there are no orders with provided input` });
+            if (orders.length < 1) return response.status(200).json({ message: "Provide status as 'active or completed' and valid user_id OR there are no orders with provided input" });
 
             response.status(200).json(orders);
 
