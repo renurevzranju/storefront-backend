@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user";
 
 dotenv.config();
 
@@ -16,6 +17,15 @@ export class AuthenticationHelper {
    */
   static generateToken(id: number): string {
     return jwt.sign({ id }, String(this.tokenSecret));
+  }
+
+  /**
+   * Decode JWT token
+   * @param {string} token JWT token.
+   * @return {User} returns User object.
+   */
+  static decodeToken(token: string): User {
+    return jwt.decode(token) as User;
   }
 
   /**
