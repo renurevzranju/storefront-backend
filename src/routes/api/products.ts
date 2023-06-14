@@ -1,5 +1,5 @@
 import express from "express";
-import authenticate from "../../middleware/auth";
+import authenticate from "../../middleware/authentication";
 import ProductHandler from "../../handlers/product";
 
 const products = express.Router();

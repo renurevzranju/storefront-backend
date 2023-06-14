@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { UserModel } from "../models/user";
-import { AuthenticationHelper } from "../helper/authentication";
+import { AuthenticationHelper } from "../helper/auth";
 
 const model = new UserModel();
 

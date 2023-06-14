@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthenticationHelper } from "../helper/authentication";
+import { AuthenticationHelper } from "../helper/auth";
 
 /**
  * Middleware for JWT authentication
