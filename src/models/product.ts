@@ -10,11 +10,11 @@ export type Product = {
 export class ProductModel {
   /**
    * Create product in the database
-   * @param {Product} product User object to create.
-   * @param {string} product.name User name of the user.
-   * @param {number} product.price First name of the user.
-   * @param {string} product.category Last name of the user.
-   * @return {Product} User object that was created.
+   * @param {Product} product Product object to create.
+   * @param {string} product.name name of the product.
+   * @param {number} product.price price of the product.
+   * @param {string} product.category category of the product.
+   * @return {Product} Product object that was created.
    */
   async create(product: Product): Promise<Product> {
     try {
@@ -57,6 +57,22 @@ export class ProductModel {
       return count;
     } catch (err) {
       throw new Error(`Unable to delete product ${id}. Error: ${err}`);
+    }
+  }
+
+  /**
+   * Delete all products in the database - Only for Testing purposes
+   */
+  async deleteAll(): Promise<void> {
+    try {
+      // @ts-ignore
+      const connection = await client.connect();
+      const sql = "DELETE FROM products";
+
+      await connection.query(sql);
+      connection.release();
+    } catch (err) {
+      throw new Error(`Unable to delete all products. Error: ${err}`);
     }
   }
 

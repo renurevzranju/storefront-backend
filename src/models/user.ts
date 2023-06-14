@@ -64,6 +64,22 @@ export class UserModel {
   }
 
   /**
+   * Delete All user in the database - Only for test suites
+   */
+  async deleteAll(): Promise<void> {
+    try {
+      // @ts-ignore
+      const connection = await client.connect();
+      const sql = "DELETE FROM users";
+
+      await connection.query(sql);
+      connection.release();
+    } catch (err) {
+      throw new Error(`Unable to delete all users. Error: ${err}`);
+    }
+  }
+
+  /**
    * Get user based on user_name from the users table in the database
    * @param {string} user_name username of the user to be fetched.
    * @return {User} User object based on the id passed.

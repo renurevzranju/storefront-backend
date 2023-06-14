@@ -4,29 +4,6 @@ import { OrderModel } from "../models/order";
 const model = new OrderModel();
 
 export default class OrderHandler {
-  async create(_request: Request, response: Response) {
-    try {
-      const { user_id } = _request.params;
-      const { status, products } = _request.body;
-      if (status && products.length > 0 && user_id) {
-        const orderPlaced = await model.create({
-          user_id,
-          status,
-          products,
-        });
-        response
-          .status(200)
-          .json({ message: "Order created successfully", order: orderPlaced });
-      } else {
-        response.status(400).json({
-          error: "status and products are required to create an order",
-        });
-      }
-    } catch (error) {
-      response.status(500).json(`error while creating order: ${error}`);
-    }
-  }
-
   async addProduct(_request: Request, response: Response) {
     try {
       const { order_id, product_id, quantity } = _request.body;
@@ -50,6 +27,29 @@ export default class OrderHandler {
       response
         .status(500)
         .json(`error while adding product to the order: ${error}`);
+    }
+  }
+
+  async create(_request: Request, response: Response) {
+    try {
+      const { user_id } = _request.params;
+      const { status, products } = _request.body;
+      if (status && products.length > 0 && user_id) {
+        const orderPlaced = await model.create({
+          user_id: Number(user_id),
+          status,
+          products,
+        });
+        response
+          .status(200)
+          .json({ message: "Order created successfully", order: orderPlaced });
+      } else {
+        response.status(400).json({
+          error: "status and products are required to create an order",
+        });
+      }
+    } catch (error) {
+      response.status(500).json(`error while creating order: ${error}`);
     }
   }
 
@@ -108,6 +108,30 @@ export default class OrderHandler {
       response.status(200).json(orders);
     } catch (error) {
       response.status(500).json(`error while fetching the order: ${error}`);
+    }
+  }
+
+  async updateOrderStatus(_request: Request, response: Response) {
+    try {
+      const { id, status } = _request.params;
+      if (status && id) {
+        const updatedOrder = await model.updateStatus(
+          id as unknown as number,
+          status
+        );
+        response
+          .status(200)
+          .json({
+            message: "Order status has been updated successfully",
+            order: updatedOrder,
+          });
+      } else {
+        response.status(400).json({
+          error: "status and id are required to update an order",
+        });
+      }
+    } catch (error) {
+      response.status(500).json(`error while updating order: ${error}`);
     }
   }
 }
