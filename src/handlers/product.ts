@@ -4,19 +4,23 @@ import { ProductModel } from "../models/product";
 const model = new ProductModel();
 
 export default class ProductHandler {
-
   async create(_request: Request, response: Response) {
     try {
       const { name, price, category } = _request.body;
       if (name && price) {
         const product = await model.create({
-          name, price: Number(price), category
+          name,
+          price: Number(price),
+          category,
         });
-        response.status(200).json({ message: "Product created successfully", product: product });
+        response
+          .status(200)
+          .json({ message: "Product created successfully", product: product });
       } else {
-        response.status(400).json({ error: "name and price are required to create a product" });
+        response
+          .status(400)
+          .json({ error: "name and price are required to create a product" });
       }
-
     } catch (error) {
       response.status(500).json(`error while creating product: ${error}`);
     }
@@ -27,13 +31,15 @@ export default class ProductHandler {
       const { id } = _request.params;
       const rowCount = await model.delete(Number(id));
       if (rowCount > 0) {
-        response.status(200).json({ message: `Successfully deleted product with id: ${id}` });
+        response
+          .status(200)
+          .json({ message: `Successfully deleted product with id: ${id}` });
+      } else {
+        response
+          .status(400)
+          .json({ message: `Couldn't delete product with id: ${id}` });
       }
-      else {
-        response.status(400).json({ message: `Couldn't delete product with id: ${id}` });
-      }
-    }
-    catch (error) {
+    } catch (error) {
       response.status(500).json(`error while deleting the product: ${error}`);
     }
   }
@@ -43,7 +49,9 @@ export default class ProductHandler {
       const products = await model.index();
       response.status(200).json(products);
     } catch (error) {
-      response.status(500).json(`error while fetching the product list: ${error}`);
+      response
+        .status(500)
+        .json(`error while fetching the product list: ${error}`);
     }
   }
 
@@ -53,12 +61,19 @@ export default class ProductHandler {
     try {
       const products = await model.getProductsByCategory(category);
       //If product is empty check
-      if (products.length < 1) return response.status(401).json({ error: "Provide a valid category or there are no products in this category" });
+      if (products.length < 1)
+        return response.status(401).json({
+          error:
+            "Provide a valid category or there are no products in this category",
+        });
 
       response.status(200).json(products);
-
     } catch (error) {
-      response.status(500).json(`error while fetching the product by category [${category}]: ${error}`);
+      response
+        .status(500)
+        .json(
+          `error while fetching the product by category [${category}]: ${error}`
+        );
     }
   }
 
@@ -78,12 +93,14 @@ export default class ProductHandler {
       const { name, price, category } = _request.body;
 
       const product = await model.update({
-        id: Number(id), name, price: Number(price), category
+        id: Number(id),
+        name,
+        price: Number(price),
+        category,
       });
 
       response.status(200).json(product);
-    }
-    catch (error) {
+    } catch (error) {
       response.status(500).json(`error while updating the product: ${error}`);
     }
   }

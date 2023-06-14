@@ -43,10 +43,10 @@ export class UserModel {
   }
 
   /**
-  * Delete user in the database
-  * @param {number} id Id of the user.
-  * @return {number} No of rows deleted.
-  */
+   * Delete user in the database
+   * @param {number} id Id of the user.
+   * @return {number} No of rows deleted.
+   */
   async delete(id: number): Promise<number> {
     try {
       // @ts-ignore
@@ -59,9 +59,7 @@ export class UserModel {
 
       return count;
     } catch (err) {
-      throw new Error(
-        `Unable to delete user ${id}. Error: ${err}`
-      );
+      throw new Error(`Unable to delete user ${id}. Error: ${err}`);
     }
   }
 
@@ -153,9 +151,7 @@ export class UserModel {
 
       return editedUser;
     } catch (err) {
-      throw new Error(
-        `Unable to update user ${user.user_name}. Error: ${err}`
-      );
+      throw new Error(`Unable to update user ${user.user_name}. Error: ${err}`);
     }
   }
 }

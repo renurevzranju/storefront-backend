@@ -26,7 +26,7 @@ export class ProductModel {
       const result = await connection.query(sql, [
         product.name,
         product.price,
-        product.category
+        product.category,
       ]);
       const createdProduct = result.rows[0];
       connection.release();
@@ -40,10 +40,10 @@ export class ProductModel {
   }
 
   /**
-  * Delete product in the database
-  * @param {number} id Id of the user.
-  * @return {number} No of rows deleted.
-  */
+   * Delete product in the database
+   * @param {number} id Id of the user.
+   * @return {number} No of rows deleted.
+   */
   async delete(id: number): Promise<number> {
     try {
       // @ts-ignore
@@ -56,9 +56,7 @@ export class ProductModel {
 
       return count;
     } catch (err) {
-      throw new Error(
-        `Unable to delete product ${id}. Error: ${err}`
-      );
+      throw new Error(`Unable to delete product ${id}. Error: ${err}`);
     }
   }
 
@@ -141,7 +139,7 @@ export class ProductModel {
         product.id,
         product.name,
         product.price,
-        product.category
+        product.category,
       ]);
       const editedProduct = result.rows[0];
       connection.release();

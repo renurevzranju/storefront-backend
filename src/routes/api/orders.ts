@@ -21,9 +21,13 @@ orders.delete("/deleteOrder/:id", authenticate, (request, response) => {
 });
 
 //get orders based on status and user id
-orders.get("/getOrderByStatus/:id/:status", authenticate, (request, response) => {
-  orderHandler.getOrderByStatus(request, response);
-});
+orders.get(
+  "/getOrderByStatus/:id/:status",
+  authenticate,
+  (request, response) => {
+    orderHandler.getOrderByStatus(request, response);
+  }
+);
 
 //Index - Get all orders
 orders.get("/", authenticate, (request, response) => {

@@ -12,7 +12,7 @@ export type OrderProduct = {
   order_id: number;
   quantity: number;
   name?: string;
-}
+};
 
 export class OrderModel {
   /**
@@ -27,17 +27,18 @@ export class OrderModel {
     try {
       // @ts-ignore
       const connection = await client.connect();
-      const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${Number(product.order_id)}, ${Number(product.product_id)}, ${Number(product.quantity)}) RETURNING *`;
+      const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${Number(
+        product.order_id
+      )}, ${Number(product.product_id)}, ${Number(
+        product.quantity
+      )}) RETURNING *`;
       const result = await connection.query(sql);
 
       connection.release();
 
       return result.rows[0];
-
     } catch (err) {
-      throw new Error(
-        `Unable to add new order. ${err}`
-      );
+      throw new Error(`Unable to add new order. ${err}`);
     }
   }
 
@@ -56,33 +57,29 @@ export class OrderModel {
       const sql =
         "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
 
-      const result = await connection.query(sql, [
-        order.status,
-        order.user_id
-      ]);
+      const result = await connection.query(sql, [order.status, order.user_id]);
       const createdOrder = result.rows[0];
 
-      order.products.forEach(async p => {
-        const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${createdOrder.id}, ${Number(p.product_id)}, ${Number(p.quantity)})`;
+      order.products.forEach(async (p) => {
+        const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${
+          createdOrder.id
+        }, ${Number(p.product_id)}, ${Number(p.quantity)})`;
         await connection.query(sql);
       });
 
       connection.release();
 
       return createdOrder;
-
     } catch (err) {
-      throw new Error(
-        `Unable to add new order. ${err}`
-      );
+      throw new Error(`Unable to add new order. ${err}`);
     }
   }
 
   /**
-  * Delete order in the database
-  * @param {number} id Id of the order.
-  * @return {number} No of rows deleted.
-  */
+   * Delete order in the database
+   * @param {number} id Id of the order.
+   * @return {number} No of rows deleted.
+   */
   async delete(id: number): Promise<number> {
     try {
       // @ts-ignore
@@ -99,9 +96,7 @@ export class OrderModel {
 
       return count;
     } catch (err) {
-      throw new Error(
-        `Unable to delete order ${id}. ${err}`
-      );
+      throw new Error(`Unable to delete order ${id}. ${err}`);
     }
   }
 
@@ -123,7 +118,9 @@ export class OrderModel {
 
       return result.rows;
     } catch (err) {
-      throw new Error(`Unable to get orders based on status[${status}]. Error: ${err}`);
+      throw new Error(
+        `Unable to get orders based on status[${status}]. Error: ${err}`
+      );
     }
   }
 

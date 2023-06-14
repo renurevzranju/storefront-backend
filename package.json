@@ -9,7 +9,8 @@
     "migrate": "db-migrate --env test up && db-migrate up",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "set ENV=test && db-migrate --env test up && ts-node node_modules/jasmine/bin/jasmine && db-migrate db:drop test",
-    "lint": "eslint -c .eslintrc \"src/**/*.ts\""
+    "lint": "eslint -c .eslintrc \"src/**/*.ts\"",
+    "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
   "author": "Udacity",
   "license": "ISC",
@@ -38,6 +39,7 @@
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
+    "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
     "tsc-watch": "^4.2.9"
   }
