@@ -34,9 +34,14 @@ orders.get("/", authenticate, (request, response) => {
   orderHandler.index(request, response);
 });
 
-//Show - Get order based on product id
+//Show - Get order based on order id
 orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
+});
+
+//Update status of the order
+orders.put("/status/:user_id", authenticate, (request, response) => {
+  orderHandler.updateOrderStatus(request, response);
 });
 
 export default orders;

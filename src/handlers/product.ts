@@ -55,6 +55,17 @@ export default class ProductHandler {
     }
   }
 
+  async getPopularProducts(_request: Request, response: Response) {
+    try {
+      const products = await model.getPopularProducts();
+      response.status(200).json(products);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching the popular product names: ${error}`);
+    }
+  }
+
   async getProductsByCategory(_request: Request, response: Response) {
     const { category } = _request.params;
 

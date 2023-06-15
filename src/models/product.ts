@@ -116,6 +116,26 @@ export class ProductModel {
   }
 
   /**
+   * Get Top 5 popular products
+   * @return {Product[]} Products names.
+   */
+  async getPopularProducts(): Promise<Product[]> {
+    try {
+      // @ts-ignore
+      const connection = await client.connect();
+      const sql =
+        "SELECT name, SUM(quantity) AS TotalQuantity FROM order_products, products WHERE order_products.product_id = products.id GROUP BY name ORDER BY SUM(quantity) DESC LIMIT 5";
+
+      const result = await connection.query(sql);
+      connection.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Unable to get product. Error: ${err}`);
+    }
+  }
+
+  /**
    * Get product based on id from the products table in the database
    * @param {number} id Id of the products to be fetched.
    * @return {Product} Products object based on the id passed.

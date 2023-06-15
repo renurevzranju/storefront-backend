@@ -11,10 +11,10 @@ describe("user endpoint test suites", (): void => {
 
   it("should create user: POST /api/users/", async (): Promise<void> => {
     const response = await request.post("/api/users/").send({
-      "first_name": "Aisha",
-      "last_name": "William",
-      "user_name": "aisha_blogs",
-      "password": "enjoyEveryDay",
+      first_name: "Aisha",
+      last_name: "William",
+      user_name: "aisha_blogs",
+      password: "enjoyEveryDay",
     });
 
     token = response.body.token as string;
@@ -25,7 +25,9 @@ describe("user endpoint test suites", (): void => {
   });
 
   it("should get user based on id. GET /api/users/:id", async (): Promise<void> => {
-    const response = await request.get(`/api/users/${user.id}`).set("Authorization", token);
+    const response = await request
+      .get(`/api/users/${user.id}`)
+      .set("Authorization", token);
 
     expect(response.body.first_name).toEqual("Aisha");
     expect(response.body.last_name).toEqual("William");
@@ -33,7 +35,9 @@ describe("user endpoint test suites", (): void => {
   });
 
   it("should get all users. GET /api/users/", async (): Promise<void> => {
-    const response = await request.get("/api/users/").set("Authorization", token);
+    const response = await request
+      .get("/api/users/")
+      .set("Authorization", token);
 
     expect(response.body[0].first_name).toEqual("Aisha");
     expect(response.body[0].last_name).toEqual("William");

@@ -25,6 +25,11 @@ products.get("/", (request, response) => {
   productHandler.index(request, response);
 });
 
+//Get Top 5 popular products
+products.get("/popular", (request, response) => {
+  productHandler.getPopularProducts(request, response);
+});
+
 //Show - Get product based on product id
 products.get("/:id", (request, response) => {
   productHandler.show(request, response);

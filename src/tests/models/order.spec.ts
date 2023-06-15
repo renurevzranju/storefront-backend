@@ -156,15 +156,17 @@ describe("Order Model Test Suite", (): void => {
   });
 
   it("should update order status", async (): Promise<void> => {
-    const order = await model.updateStatus(
-      order1.id as unknown as number,
-      "completed"
-    );
+    const order = await model.updateStatus({
+      id: order1.id as unknown as number,
+      status: "completed",
+      products: [],
+      user_id: user1.id as unknown as number,
+    });
 
     expect(order.status).not.toEqual(order1.status);
   });
 
-  it("should delete the user", async (): Promise<void> => {
+  it("should delete the order", async (): Promise<void> => {
     await model.delete(order1.id as unknown as number);
     const result = await model.index();
 

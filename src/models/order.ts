@@ -188,17 +188,19 @@ export class OrderModel {
 
   /**
    * update order status in the database
-   * @param {number} id id of the order.
-   * @param {string} status status of the order.
+   * @param {Order} order Order to update
+   * @param {number} order.id id of the order.
+   * @param {string} order.user_id user id of the order.
+   * @param {string} order.status status of the order.
    * @return {Order} returns Order object.
    */
-  async updateStatus(id: number, status: string): Promise<Order> {
+  async updateStatus(order: Order): Promise<Order> {
     try {
       // @ts-ignore
       const connection = await client.connect();
       const sql = "UPDATE orders SET status = ($1) WHERE id=($2) RETURNING *";
 
-      const result = await connection.query(sql, [status, id]);
+      const result = await connection.query(sql, [order.status, order.id]);
       connection.release();
 
       return result.rows[0];

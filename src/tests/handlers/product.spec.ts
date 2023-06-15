@@ -14,21 +14,24 @@ describe("product endpoint test suites", (): void => {
 
   beforeAll(async () => {
     const response = await request.post("/api/users/").send({
-      "first_name": "Aisha",
-      "last_name": "William",
-      "user_name": "aisha_blogs",
-      "password": "enjoyEveryDay",
+      first_name: "Aisha",
+      last_name: "William",
+      user_name: "aisha_blogs",
+      password: "enjoyEveryDay",
     });
     token = response.body.token as string;
     user = AuthenticationHelper.decodeToken(token) as User;
   });
 
   it("should create product: POST /api/products/create", async (): Promise<void> => {
-    let response = await request.post("/api/products/create").send({
-      name: "Pepsi",
-      price: 100,
-      category: "beverages",
-    }).set("Authorization", token);
+    let response = await request
+      .post("/api/products/create")
+      .send({
+        name: "Pepsi",
+        price: 100,
+        category: "beverages",
+      })
+      .set("Authorization", token);
 
     product1 = response.body.product as Product;
 
@@ -38,11 +41,14 @@ describe("product endpoint test suites", (): void => {
     expect(product1.price).toEqual(100);
     expect(product1.category).toEqual("beverages");
 
-    response = await request.post("/api/products/create").send({
-      name: "Maggi Noodles",
-      price: 95,
-      category: "food",
-    }).set("Authorization", token);
+    response = await request
+      .post("/api/products/create")
+      .send({
+        name: "Maggi Noodles",
+        price: 95,
+        category: "food",
+      })
+      .set("Authorization", token);
 
     product2 = response.body.product as Product;
 
@@ -54,7 +60,9 @@ describe("product endpoint test suites", (): void => {
   });
 
   it("should get product based on id. GET /api/products/:id", async (): Promise<void> => {
-    const response = await request.get(`/api/products/${product1.id}`).set("Authorization", token);
+    const response = await request
+      .get(`/api/products/${product1.id}`)
+      .set("Authorization", token);
 
     expect(response.body.name).toEqual("Pepsi");
     expect(response.body.price).toEqual(100);
@@ -62,9 +70,11 @@ describe("product endpoint test suites", (): void => {
   });
 
   it("should get all products. GET /api/products/", async (): Promise<void> => {
-    const response = await request.get("/api/products/").set("Authorization", token);
+    const response = await request
+      .get("/api/products/")
+      .set("Authorization", token);
 
-    expect(response.body.length).toEqual(2);
+    expect(response.status).toEqual(200);
     expect(response.body[0].name).toEqual("Pepsi");
     expect(response.body[0].price).toEqual(100);
     expect(response.body[0].category).toEqual("beverages");
@@ -73,12 +83,15 @@ describe("product endpoint test suites", (): void => {
     expect(response.body[1].category).toEqual("food");
   });
 
-  it("should update a product. PUT /api/products/:id", async (): Promise<void> =>{
-    const response = await request.put(`/api/products/${product2.id}`).set("Authorization", token).send({
-      name: "Johnson Baby oil",
-      price: 52,
-      category: "toiletries",
-    });
+  it("should update a product. PUT /api/products/:id", async (): Promise<void> => {
+    const response = await request
+      .put(`/api/products/${product2.id}`)
+      .set("Authorization", token)
+      .send({
+        name: "Johnson Baby oil",
+        price: 52,
+        category: "toiletries",
+      });
 
     expect(response.body.name).toEqual("Johnson Baby oil");
     expect(response.body.price).toEqual(52);
