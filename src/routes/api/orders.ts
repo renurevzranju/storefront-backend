@@ -34,7 +34,7 @@ orders.get("/", authenticate, (request, response) => {
   orderHandler.index(request, response);
 });
 
-//Show - Get order based on order id
+//Show - Get order based on user id
 orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
 });

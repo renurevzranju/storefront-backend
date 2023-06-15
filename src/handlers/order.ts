@@ -89,8 +89,7 @@ export default class OrderHandler {
       //If product is empty check
       if (orders.length < 1)
         return response.status(200).json({
-          message:
-            "Provide status as 'active or completed' and valid user_id OR there are no orders with provided input",
+          message: `There are no orders in ${status} status`,
         });
 
       response.status(200).json(orders);

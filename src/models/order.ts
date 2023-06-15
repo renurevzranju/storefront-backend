@@ -167,15 +167,15 @@ export class OrderModel {
   }
 
   /**
-   * Get order based on id from the orders table in the database
-   * @param {number} id Id of the order to be fetched.
+   * Get order based on user id from the orders table in the database
+   * @param {number} id user Id of the order to be fetched.
    * @return {Order} Orders object based on the id passed.
    */
   async show(id: number): Promise<Order> {
     try {
       // @ts-ignore
       const connection = await client.connect();
-      const sql = "SELECT * FROM orders WHERE id=($1)";
+      const sql = "SELECT * FROM orders WHERE user_id=($1)";
 
       const result = await connection.query(sql, [id]);
       connection.release();

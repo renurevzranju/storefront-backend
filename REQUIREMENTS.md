@@ -18,7 +18,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 - Index [token required]
 - Show [token required]
-- Create N[token required]
+- Create [token required]
 
 #### Orders
 
@@ -57,3 +57,21 @@ These are the notes from a meeting with the frontend developer that describe wha
 - products ( id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, price integer NOT NULL, category VARCHAR(200))
 - orders ( id SERIAL PRIMARY KEY, status VARCHAR(64), user_id BIGINT NOT NULL, CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(id))
 - order_products ( id SERIAL PRIMARY KEY, quantity INTEGER NOT NULL, order_id BIGINT REFERENCES orders(id), product_id BIGINT REFERENCES products(id), CONSTRAINT FK_order_id FOREIGN KEY (order_id) REFERENCES orders(id), CONSTRAINT FK_product_id FOREIGN KEY (product_id) REFERENCES products(id))
+
+### Endpoints Details
+
+Product:
+- Index - GET /api/products
+- Show - GET /api/products/:id (args: product_id)
+- Create - POST /api/products (args: product {name, price, category}) [token required]
+- Top 5 popular product names - GET /api/products/popular
+- Products by category - GET /api/products/category/:category (args: product_category)
+
+User:
+- Index - GET /api/users [token required]
+- Show - GET /api/users/:id (args: user_id) [token required]
+- Create - POST /api/users (args: user {user_name, first_name, last_name, password})
+
+Order:
+- Current Order by user - GET /api/orders/:id (args: user_id) [token required]
+- Completed Orders by user - GET /api/orders//getOrderByStatus/:id/:status (args: user_id and status as completed) [token required]
