@@ -52,6 +52,11 @@ Build script to compile TS to JS
   npm run build
 ```
 
+Start the application after build
+```
+  npm run start
+```
+
 Start the application in watch mode
 ```
   npm run watch
@@ -79,27 +84,43 @@ Server will be running on port 5000
 ### API Endpoints
 
 #### Users
-- GET http://localhost:5000/api/users -Index [token required]
+- POST http://localhost:5000/api/users -Create [token required]. Parameters are `user_name`, `password`, `first_name` and `last_name. On successful creation, JWT token will be returned. Use this token for authentication of other routes
+- POST http://localhost:5000/api/users/login -Login. Parameters are `user_name` and `password`. on successful login, JWT token will generated and returned.
+- GET http://localhost:5000/api/users -Index [token required].
 - GET http://localhost:5000/api/users/:id -Show [token required]
-- POST http://localhost:5000/api/users -Create [token required]
-- POST http://localhost:5000/api/users/login -Login
 - PUT http://localhost:5000/api/users/:id -Edit [token required]
 - DELETE http://localhost:5000/api/users/:id -Delete [token required]
 
 #### Products
 - GET http://localhost:5000/api/products -Index
 - GET http://localhost:5000/api/products/:id -Show
-- POST http://localhost:5000/api/products -Create [token required]
+- POST http://localhost:5000/api/products -Create [token required]. Parameters are: `name`, `price` and `category`.
 - GET http://localhost:5000/api/products/category/:category -Products by category
 - GET http://localhost:5000/api/products/popular -Top 5 popular products
-- PUT http://localhost:5000/api/products/:id -Edit
+- PUT http://localhost:5000/api/products/:id -Edit. Parameters are: `name`, `price` and `category`.
 - DELETE http://localhost:5000/api/products/:id -Delete
 
 #### Orders
 - GET http://localhost:5000/api/orders -Index [token required]
-- GET http://localhost:5000/api/orders/:id -Show [token required]
-- POST http://localhost:5000/api/orders/create/:user_id -Create [token required]
-- POST http://localhost:5000/api/orders/addProduct -Add products to order [token required]
+- GET http://localhost:5000/api/orders/:id -Show order by order_id [token required].
 - GET http://localhost:5000/api/orders/getOrderByStatus/:id/:status - Orders by status and user_id [token required]
 - PUT http://localhost:5000/api/orders/status/:user_id - Update order status [token required]
 - DELETE http://localhost:5000/api/orders/:id -Delete order by order_id [token required]
+- POST http://localhost:5000/api/orders/addProduct -Add products to order [token required]. Parameters are: `product_id`, `order_id` and `quantity`
+- POST http://localhost:5000/api/orders/create/:user_id -Create [token required]. Parameters are: `status` and `products`. [`user_id`(provided in url)].
+```
+Create Order Example:
+{
+  "status": "active" // active or completed
+  "products": [
+    {
+      "product_id": 1,
+      "quantity": 3
+    },
+    {
+      "product_id": 2,
+      "quantity": 5
+    }
+  ]
+}
+```
